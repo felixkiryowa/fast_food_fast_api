@@ -39,6 +39,26 @@ class Menu(MethodView):
                 new_order_data['item_name'],new_order_data['price'],new_order_data['current_items']
             )
 
+    def get(self):
+        conn = None
+        try:
+            params = config()
+            conn = psycopg2.connect(**params)
+            cur = conn.cursor()
+            # cur.execute("SELECT vendor_id, vendor_name FROM vendors WHERE vendor_id=%s ORDER BY vendor_name", (id, ))
+            cur.execute("SELECT * FROM menu ORDER BY item_id")
+            available_menu = cur.fetchall()
+            columns = ('item_id','item_name', 'price', 'current_items')
+            results = []
+            for row in available_menu:
+                results.append(dict(zip(columns, row)))
+            return jsonify({'Available Menu':results})
+            cur.close()
+        except (Exception, psycopg2.DatabaseError) as error:
+            print(error)
+        finally:
+            if conn is not None:
+                conn.close()
                            
     def execute_add_menu_item_query(self,sql,item_name,price,current_items):
         conn = None
