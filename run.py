@@ -1,18 +1,11 @@
 """
 This Module runs flask application
 """
-# from instance import APP
-# from api.instance import APP
-
-
-# from instance.views import GetApiUrls
-
-# from update_status_of_a_specific_order.instance.views import GetApiUrls
-import flask
+from connection import APP
 from api.app.views import OrderApiUrls
 
 
-APP = flask.Flask(__name__)
+
 
 APP.env = 'development'
 
