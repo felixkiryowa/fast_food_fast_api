@@ -14,23 +14,33 @@ def create_tables():
             password VARCHAR(255) NOT NULL,
             address VARCHAR(255) NULL,
             phone_number VARCHAR(200) NULL,
-            admin BOOLEAN NOT NULL
-        )""",
-        """
-        CREATE TABLE IF NOT EXISTS orders (
-            order_id SERIAL PRIMARY KEY,
-            order_items VARCHAR(500) NOT NULL,
-            order_status VARCHAR(100) NULL,
-            user_id INT REFERENCES users (user_id)
-                    ON UPDATE CASCADE ON DELETE CASCADE
-        )
-        """,
+            admin BOOLEAN  DEFAULT FALSE
+        )"""
+        ,
         """
         CREATE TABLE IF NOT EXISTS menu (
                 item_id SERIAL PRIMARY KEY,
                 item_name VARCHAR(255) NOT NULL,
                 price BIGINT NOT NULL,
                 current_items BIGINT NOT NULL
+        )
+        """
+        ,
+        """
+        CREATE TABLE IF NOT EXISTS orders (
+            order_id SERIAL PRIMARY KEY,
+            user_id INTEGER NOT NULL,
+            item_id INTEGER NOT NULL,
+            order_date_time TIMESTAMP NOT NULL,
+            price BIGINT NOT NULL,
+            quantity INTEGER NOT NULL,
+            order_status VARCHAR(100) NOT NULL,
+            FOREIGN KEY (user_id)
+                REFERENCES users (user_id)
+                ON UPDATE CASCADE ON DELETE CASCADE,
+            FOREIGN KEY (item_id)
+                REFERENCES menu (item_id)
+                ON UPDATE CASCADE ON DELETE CASCADE
         )
         """,
         )
