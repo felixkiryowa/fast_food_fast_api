@@ -72,7 +72,7 @@ class AuthorizeUsers(MethodView):
                 user_username = specific_user[0][2]
                 token = jwt.encode({'username':user_username, 'exp':datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, APP.config['SECRET_KEY'])
                 cur.close()
-                return jsonify({'token':token.decode('UTF-8')}) 
+                return jsonify({'token generated':token.decode('UTF-8')}) 
             return make_response(json.dumps(error_message), 401, {'WWW-Authenticate' : 'Basic realm="Login required"'}) 
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
