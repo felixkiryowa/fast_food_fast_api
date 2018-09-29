@@ -34,7 +34,7 @@ def create_tables():
             order_date_time TIMESTAMP NOT NULL,
             price BIGINT NOT NULL,
             quantity INTEGER NOT NULL,
-            order_status VARCHAR(100) NOT NULL,
+            order_status VARCHAR(100)  DEFAULT 'new order',
             FOREIGN KEY (user_id)
                 REFERENCES users (user_id)
                 ON UPDATE CASCADE ON DELETE CASCADE,
