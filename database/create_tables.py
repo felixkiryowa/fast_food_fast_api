@@ -3,10 +3,11 @@ import psycopg2
 from config import config
 
 def create_tables():
+    
     """ create tables in the PostgreSQL database"""
     commands = (
         """
-         CREATE TABLE users (
+         CREATE TABLE IF NOT EXISTS users  (
             user_id SERIAL PRIMARY KEY,
             name VARCHAR(200) NOT NULL UNIQUE,
             username VARCHAR(255) NOT NULL, 
@@ -16,7 +17,7 @@ def create_tables():
             admin BOOLEAN NOT NULL
         )""",
         """
-        CREATE TABLE orders (
+        CREATE TABLE IF NOT EXISTS orders (
             order_id SERIAL PRIMARY KEY,
             order_items VARCHAR(500) NOT NULL,
             order_status VARCHAR(100) NULL,
@@ -25,7 +26,7 @@ def create_tables():
         )
         """,
         """
-        CREATE TABLE menu (
+        CREATE TABLE IF NOT EXISTS menu (
                 item_id SERIAL PRIMARY KEY,
                 item_name VARCHAR(255) NOT NULL,
                 price BIGINT NOT NULL,

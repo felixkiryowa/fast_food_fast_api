@@ -4,9 +4,9 @@ This module handles view routes
 """
 # from instance.order_api import ManageOrders
 
-from api.controller.order_api  import ManageOrders
+from api.controller.auth_api import AuthorizeUsers
 
-class GetApiUrls(object):
+class OrderApiUrls(object):
 
     """
     class to define method to define all routes
@@ -19,17 +19,8 @@ class GetApiUrls(object):
     def get_all_urls(APP):
         """function defining all the api routes """
 
-        order_view = ManageOrders.as_view('order_api')
+        auth_view = AuthorizeUsers.as_view('auth_api')
+        
+        APP.add_url_rule('/api/v2/auth/login', view_func=auth_view, methods=['POST',])
+        APP.add_url_rule('/api/v2/auth/signup', view_func=auth_view, methods=['POST',])
 
-        APP.add_url_rule(
-            '/api/v1/orders',
-            defaults={
-                'order_id': None
-            }, view_func=order_view, methods=['GET',]
-        )
-        APP.add_url_rule('/api/v1/orders', view_func=order_view, methods=['POST',])
-
-        APP.add_url_rule(
-            '/api/v1/orders/<int:order_id>',
-            view_func=order_view, methods=['GET', 'PUT']
-        )
